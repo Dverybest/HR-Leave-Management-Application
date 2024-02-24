@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{20635B74-00D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRLeaveManagement.Domain", "HRLeaveManagement.Domain\HRLeaveManagement.Domain.csproj", "{BEBC8A5E-EDF5-4A71-BCBD-AB01010401A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRLeaveManagement.Application", "HRLeaveManagement.Application\HRLeaveManagement.Application.csproj", "{90F4E84E-FC4F-40FC-85B8-8EAD71224ACE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{90F4E84E-FC4F-40FC-85B8-8EAD71224ACE} = {C6BA057A-B772-4C30-80C6-9C27AB887F4E}
 		{BEBC8A5E-EDF5-4A71-BCBD-AB01010401A0} = {C6BA057A-B772-4C30-80C6-9C27AB887F4E}
 		{20635B74-00D4-4703-AAE3-1B654F7F365E} = {9AD7AC3D-8992-4766-A8D8-299EAE9D6362}
 		{ADC7E6E1-B04B-4E64-A0CB-85AF397BA459} = {9AD7AC3D-8992-4766-A8D8-299EAE9D6362}
@@ -37,5 +40,9 @@ Global
 		{BEBC8A5E-EDF5-4A71-BCBD-AB01010401A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEBC8A5E-EDF5-4A71-BCBD-AB01010401A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEBC8A5E-EDF5-4A71-BCBD-AB01010401A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90F4E84E-FC4F-40FC-85B8-8EAD71224ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90F4E84E-FC4F-40FC-85B8-8EAD71224ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90F4E84E-FC4F-40FC-85B8-8EAD71224ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90F4E84E-FC4F-40FC-85B8-8EAD71224ACE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
