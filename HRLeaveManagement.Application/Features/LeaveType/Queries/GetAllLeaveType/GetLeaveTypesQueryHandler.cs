@@ -1,4 +1,5 @@
 using AutoMapper;
+using HRLeaveManagement.Application.Contracts.Logging;
 using HRLeaveManagement.Application.Contracts.Persistence;
 using MediatR;
 
@@ -8,22 +9,25 @@ public class GetLeaveTypesQueryHandler : IRequestHandler<GetLeaveTypesQuery, Lis
 {
     private readonly IMapper _mapper;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
+    private readonly IAppLogger<GetLeaveTypesQueryHandler> _logger;
 
-    public GetLeaveTypesQueryHandler(IMapper mapper,ILeaveTypeRepository leaveTypeRepository)
+    public GetLeaveTypesQueryHandler(IMapper mapper, ILeaveTypeRepository leaveTypeRepository, IAppLogger<GetLeaveTypesQueryHandler> logger)
     {
         _mapper = mapper;
         _leaveTypeRepository = leaveTypeRepository;
+        _logger = logger;
     }
 
     public async Task<List<LeaveTypeDto>> Handle(GetLeaveTypesQuery request, CancellationToken cancellationToken)
     {
-       //Query the datebase
+        //Query the datebase
         var leaveTypes = await _leaveTypeRepository.GetAsync();
 
-       //Convert data objects to DTO objects
-       var data = _mapper.Map<List<LeaveTypeDto>>(leaveTypes);
+        //Convert data objects to DTO objects
+        var data = _mapper.Map<List<LeaveTypeDto>>(leaveTypes);
 
-       //return list of DTO objects
-       return data;
+        //return list of DTO objects
+        _logger.LogInformation("Leave types was retrieved successfully");
+        return data;
     }
 }
