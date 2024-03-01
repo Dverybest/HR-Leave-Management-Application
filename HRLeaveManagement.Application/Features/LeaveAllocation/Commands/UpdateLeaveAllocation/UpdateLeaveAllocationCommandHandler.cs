@@ -22,7 +22,7 @@ public class UpdateLeaveAllocationCommandHandler : IRequestHandler<UpdateLeaveAl
         var validationResult = await validtor.ValidateAsync(request);
 
         if (validationResult.Errors.Count != 0)
-            throw new BadRequestException("Invalid Leave Allocation Request");
+            throw new BadRequestException("Invalid Leave Allocation Request",validationResult);
 
         var leaveAllocation = await _leaveAllocationRepository.GetByIdAsync(request.Id);
         

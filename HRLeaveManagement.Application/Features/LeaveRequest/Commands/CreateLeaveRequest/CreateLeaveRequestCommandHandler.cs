@@ -30,7 +30,7 @@ public class CreateLeaveRequestCommandHandler : IRequestHandler<CreateLeaveReque
         var validator = new CreateLeaveRequestCommandValidation(_leaveTypeRepository);
         var validationResult = await validator.ValidateAsync(request,cancellationToken);
         if (validationResult.Errors.Count != 0)
-            throw new BadRequestException("Invalid Leave Request");
+            throw new BadRequestException("Invalid Leave Request",validationResult);
 
         var leaveRequest = _mapper.Map<Domain.LeaveRequest>(request);
         await _leaveRequestRepository.CreateAsync(leaveRequest);
