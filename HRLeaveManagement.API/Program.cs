@@ -2,6 +2,7 @@ using HRLeaveManagement.Application;
 using HRLeaveManagement.Persistence;
 using HRLeaveManagement.Infrastructure;
 using HRLeaveManagement.API.MiddleWare;
+using HRLeaveManagement.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddIdentityService(builder.Configuration);
 
 builder.Services.AddControllers();
 
@@ -24,7 +26,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
 app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
@@ -36,6 +37,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("all");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

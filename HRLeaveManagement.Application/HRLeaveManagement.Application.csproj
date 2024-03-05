@@ -9,6 +9,14 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Contracts\Identity\" />
+    <None Remove="Models\Identity\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Contracts\Identity\" />
+    <Folder Include="Models\Identity\" />
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

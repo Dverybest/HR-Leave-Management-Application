@@ -19,5 +19,6 @@
     <ProjectReference Include="..\HRLeaveManagement.Application\HRLeaveManagement.Application.csproj" />
     <ProjectReference Include="..\HRLeaveManagement.Persistence\HRLeaveManagement.Persistence.csproj" />
     <ProjectReference Include="..\HRLeaveManagement.Infrastructure\HRLeaveManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\HRLeaveManagement.Identity\HRLeaveManagement.Identity.csproj" />
   </ItemGroup>
 </Project>

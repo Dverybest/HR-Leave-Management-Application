@@ -19,7 +19,7 @@ public class EmailSender : IEmailSender
     {
 
         var message = new MimeMessage();
-        message.From.Add(new MailboxAddress(EmailSettings.FormName, EmailSettings.FormAddress));
+        message.From.Add(new MailboxAddress(EmailSettings.FromName, EmailSettings.FormAddress));
         message.To.Add(new MailboxAddress("", email.To));
         message.Subject = email.Subject;
         message.Body = new TextPart("plain") { Text = email.Body };
