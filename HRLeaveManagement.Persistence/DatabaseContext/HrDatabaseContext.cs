@@ -6,7 +6,7 @@ namespace HRLeaveManagement.Persistence.DatabaseContext;
 
 public class HrDatabaseContext : DbContext
 {
-    public HrDatabaseContext(DbContextOptions options) : base(options)
+    public HrDatabaseContext(DbContextOptions<HrDatabaseContext> options) : base(options)
     {
 
     }
