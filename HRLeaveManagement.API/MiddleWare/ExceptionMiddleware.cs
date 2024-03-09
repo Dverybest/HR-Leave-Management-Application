@@ -1,18 +1,22 @@
 using System.Net;
+using System.Text.Json.Serialization;
 using HRLeaveManagement.API.MiddleWare.Models;
+using HRLeaveManagement.Application.Contracts.Logging;
 using HRLeaveManagement.Application.Exceptions;
+using Newtonsoft.Json;
 
 namespace HRLeaveManagement.API.MiddleWare;
 
 public class ExceptionMiddleware
 {
     private readonly RequestDelegate _next;
+
     public ExceptionMiddleware(RequestDelegate next)
     {
         _next = next;
     }
 
-    public async Task InvokeAsync(HttpContext httpContext)
+    public async Task InvokeAsync(HttpContext httpContext,IAppLogger<ExceptionMiddleware> logger)
     {
         try
         {
@@ -20,11 +24,11 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
-            await HandleExceptionAsync(httpContext, ex);
+            await HandleExceptionAsync(httpContext, ex,logger);
         }
     }
 
-    private async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
+    private async Task HandleExceptionAsync(HttpContext httpContext, Exception ex,IAppLogger<ExceptionMiddleware>logger)
     {
         HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
         CustomProblemDetails problem = new();
@@ -64,6 +68,8 @@ public class ExceptionMiddleware
         }
 
         httpContext.Response.StatusCode = (int)statusCode;
+        var logMessage = JsonConvert.SerializeObject(problem);
+        logger.LogError(logMessage);
         await httpContext.Response.WriteAsJsonAsync(problem);
     }
 }

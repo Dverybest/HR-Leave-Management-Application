@@ -61,7 +61,7 @@ public class LeaveRequestController : Controller
     }
 
 
-    [HttpPut]
+    [HttpPatch]
     [Route("CancelRequest")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -72,7 +72,7 @@ public class LeaveRequestController : Controller
         return NoContent();
     }
 
-    [HttpPut]
+    [HttpPatch]
     [Route("UpdateApproval")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

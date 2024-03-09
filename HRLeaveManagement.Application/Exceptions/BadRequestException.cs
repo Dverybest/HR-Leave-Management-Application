@@ -6,7 +6,6 @@ public class BadRequestException : Exception
 {
     public BadRequestException(string message) : base(message)
     {
-        ValidationErrors = new Dictionary<string, string[]>();
     }
 
     public BadRequestException(string message, ValidationResult validationResult) : base(message)
@@ -14,5 +13,6 @@ public class BadRequestException : Exception
         ValidationErrors = validationResult.ToDictionary();
     }
 
-    public IDictionary<string, string[]> ValidationErrors { get; set; }
+    public IDictionary<string, string[]> ValidationErrors { get; set; } = new Dictionary<string, string[]>();
+
 }
