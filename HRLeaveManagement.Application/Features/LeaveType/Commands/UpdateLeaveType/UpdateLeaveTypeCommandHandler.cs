@@ -27,7 +27,7 @@ public class UpdateLeaveTypeCommandHandler : IRequestHandler<UpdateLeaveTypeComm
         if (validationResult.Errors.Count != 0)
         {
             _logger.LogWarning("Validation errors in update request for {0} - {1}", nameof(LeaveType), request.Id);
-            throw new BadRequestException("Invalid leave type");
+            throw new BadRequestException("Invalid leave type",validationResult);
         }
 
         //convert data to domain entity object
