@@ -46,7 +46,7 @@ public static class IdentityServicesRegistration
 				ValidIssuer = configuration["JwtSettings:Issuer"],
 				ValidAudience = configuration["JwtSettings:Audience"],
 				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-					configuration["JwtSettings:Key"]))
+					configuration["JwtSettings:Key"]!))
 			};
 		});
 

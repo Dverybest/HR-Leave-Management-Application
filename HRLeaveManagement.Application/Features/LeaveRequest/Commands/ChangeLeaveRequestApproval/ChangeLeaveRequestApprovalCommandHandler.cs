@@ -16,14 +16,16 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
     private readonly ILeaveRequestRepository _leaveRequestRepository;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly IAppLogger<CreateLeaveRequestCommandHandler> _appLogger;
+    private readonly ILeaveAllocationRepository _leaveAllocationRepository;
 
-    public ChangeLeaveRequestApprovalCommandHandler(IEmailSender emailSender, IMapper mapper, ILeaveRequestRepository leaveRequestRepository, ILeaveTypeRepository leaveTypeRepository, IAppLogger<CreateLeaveRequestCommandHandler> appLogger)
+    public ChangeLeaveRequestApprovalCommandHandler(IEmailSender emailSender, IMapper mapper, ILeaveRequestRepository leaveRequestRepository, ILeaveTypeRepository leaveTypeRepository, IAppLogger<CreateLeaveRequestCommandHandler> appLogger,ILeaveAllocationRepository leaveAllocationRepository)
     {
         _emailSender = emailSender;
         _mapper = mapper;
         _leaveRequestRepository = leaveRequestRepository;
         _leaveTypeRepository = leaveTypeRepository;
         _appLogger = appLogger;
+        _leaveAllocationRepository = leaveAllocationRepository;
     }
 
     public async Task<Unit> Handle(ChangeLeaveRequestApprovalCommand request, CancellationToken cancellationToken)
@@ -34,9 +36,15 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
             throw new NotFoundException(nameof(LeaveRequest), request.Id);
 
         leaveRequest.Approved = request.Approved;
-
         await _leaveRequestRepository.UpdateAsync(leaveRequest);
 
+        if (leaveRequest.Approved==true)
+        {
+            int daysRequested = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
+            var allocation = await _leaveAllocationRepository.GetUserLeaveAllocations(leaveRequest.RequestingEmployeeId,leaveRequest.LeaveTypeId);
+            allocation!.NumberOfDays -= daysRequested;
+            await _leaveAllocationRepository.UpdateAsync(allocation);
+        }
         try
         {
             var email = new EmailMessage

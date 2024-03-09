@@ -1,10 +1,12 @@
 using HRLeaveManagement.Application.Features.LeaveType.Queries.GetAllLeaveType;
+using HRLeaveManagement.Application.Models.Identity;
 
 namespace HRLeaveManagement.Application.Features.LeaveRequest.Queries.GetLeaveRequestDetail;
 
 public class LeaveRequestDetailsDto
 {
     public int Id { get; set; }
+    public required Employee Employee { get; set; }
     public required LeaveTypeDto LeaveType { get; set; }
     public int LeaveTypeId { get; set; }
     public string RequestingEmployeeId { get; set; } = string.Empty;

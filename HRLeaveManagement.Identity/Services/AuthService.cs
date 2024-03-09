@@ -101,7 +101,7 @@ public class AuthService : IAuthService
 
         JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(
             issuer: _jwtSettings.Issuer,
-            audience: _jwtSettings.Aduience,
+            audience: _jwtSettings.Audience,
             claims: claims,
             expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
             signingCredentials: signingCredentials
