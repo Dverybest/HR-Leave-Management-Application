@@ -1,7 +1,8 @@
+using HRLeaveManagement.Application.Contracts.Identity;
 using HRLeaveManagement.Domain;
 using HRLeaveManagement.Persistence.DatabaseContext;
+using HRLeaveManagement.Persistence.IntegrationTests.Mocks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using Shouldly;
 
 namespace HRLeaveManagement.Persistence.IntegrationTests;
@@ -14,8 +15,9 @@ public class HrDatabaseContextTests
     {
         var dbOptions = new DbContextOptionsBuilder<HrDatabaseContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
+        var mockUserService = MockUserServices.GetMocktUserService();
 
-        _hrDatabaseContext = new HrDatabaseContext(dbOptions);
+        _hrDatabaseContext = new HrDatabaseContext(dbOptions, mockUserService.Object);
     }
     [Fact]
     public async void Save_SetDateCreatedValue()
