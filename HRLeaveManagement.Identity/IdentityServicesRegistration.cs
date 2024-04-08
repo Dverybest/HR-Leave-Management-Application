@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using HRLeaveManagement.Application.Contracts.Identity;
+using HRLeaveManagement.Application.Exceptions;
 using HRLeaveManagement.Application.Models.Identity;
 using HRLeaveManagement.Identity.DbContext;
 using HRLeaveManagement.Identity.Models;
 using HRLeaveManagement.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,9 +54,26 @@ public static class IdentityServicesRegistration
 				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
 					configuration["JwtSettings:Key"]!))
 			};
+			o.Events = new JwtBearerEvents()
+			{
+				OnChallenge = async context =>
+					{
+						context.HandleResponse();
+
+						context.Response.ContentType = "application/json";
+						context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+
+						await context.Response.WriteAsync(
+							JsonSerializer.Serialize(new ProblemDetails()
+							{
+								Title= nameof(UnauthorizedException),
+								Detail="Invalid authourization"
+							})
+						);
+					}
+			};
 		});
 
 		return services;
 	}
 }
-
